@@ -3,10 +3,7 @@ import java.net.*;
 
 public class Server implements Runnable {
 
-	private OrderList kitchen;
-	
-    public Server(OrderList newKitchen) {
-		kitchen = newKitchen;
+	public Server(OrderList newKitchen) {
 	}
 
 	public void run(){

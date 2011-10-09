@@ -14,7 +14,9 @@ public class ServerThread extends Thread {
     }
 
     public void run() {
-
+    System.out.println("Server Thread reporting sir!");
+    kitchen.addOrder("test");
+    System.out.println(kitchen.ordersList.size());
 	try {
 	    PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 	    BufferedReader in = new BufferedReader(
