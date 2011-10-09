@@ -1,7 +1,7 @@
 import java.io.*;
 import java.net.*;
 
-public class Server {
+public class Server implements Runnable {
 
 	private OrderList kitchen;
 	
@@ -9,7 +9,7 @@ public class Server {
 		kitchen = newKitchen;
 	}
 
-	public void start (String[] args) throws IOException {
+	public void run(){
         
     	OrderList kitchen = new OrderList(); 
     	ServerSocket serverSocket = null;
@@ -22,9 +22,17 @@ public class Server {
             System.exit(-1);
         }
  
+        try {
         while (listening)
-        new ServerThread(serverSocket.accept(),kitchen).start();
- 
+        {
+				new ServerThread(serverSocket.accept(),kitchen).start();
+		} 
         serverSocket.close();
+        	
+        }
+        catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+        	}
     }
 }
