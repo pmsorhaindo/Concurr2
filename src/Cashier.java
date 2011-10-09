@@ -7,7 +7,6 @@ public class Cashier implements Runnable {
 	private OrderList kitchen;
 	private String cashierName;
 	
-	
 	public Cashier(String nameText, OrderList kitchenName){
 		cashierName = nameText;
 		kitchen = kitchenName;
@@ -20,6 +19,7 @@ public class Cashier implements Runnable {
 		PrintStream cashierPrintStream = null;
 		try {
 			cashierSocket = new Socket("localhost",9999);
+			System.out.println("bump");
 			cashierPrintStream = new PrintStream(cashierSocket.getOutputStream());
 			System.out.println("streamattt!");
 		} catch (UnknownHostException e1) {
@@ -47,6 +47,7 @@ public class Cashier implements Runnable {
 				
 			}*/
 			if(cashierPrintStream!=null)cashierPrintStream.print("placeOrder");
+			System.out.println("yum!");
 			/*Order tempOrder = kitchen.addOrder(cashierName);
 			System.out.println("Cashier: " + cashierName + "  " + tempOrder.getOrderID() + "  Placed at: "
 			+ tempOrder.getTimePlaced());

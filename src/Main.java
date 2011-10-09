@@ -4,11 +4,10 @@ public class Main {
 		
 		OrderList kitchenYo = new OrderList();
 		
-		Thread serv = new Thread (new Server(kitchenYo),"server1");	
+		Server server = new Server();	
 		Thread cook1 = new Thread(new Cook("Fred",kitchenYo), "cook1");
 		Thread cashier1 = new Thread(new Cashier("Bob",kitchenYo), "cashier1");
 		
-		serv.start();
 		cashier1.start();
 		cook1.start();
 		
