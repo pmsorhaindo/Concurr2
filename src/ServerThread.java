@@ -23,7 +23,8 @@ public class ServerThread extends Thread {
 
 	    String inputLine, outputLine;
 	    KitchenComm com = new KitchenComm(kitchen);
-	    outputLine = com.processInput(null);
+	    outputLine = com.processInput(in.readLine());
+	    System.out.println("sending to com: "+outputLine);
 	    out.println(outputLine);
 
 	    while ((inputLine = in.readLine()) != null) {

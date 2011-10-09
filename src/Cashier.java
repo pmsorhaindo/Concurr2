@@ -6,6 +6,9 @@ public class Cashier implements Runnable {
 	
 	private OrderList kitchen;
 	private String cashierName;
+	private Socket cashierSocket = null;
+	private PrintWriter out = null;
+	private BufferedReader in = null;
 	
 	public Cashier(String nameText, OrderList kitchenName){
 		cashierName = nameText;
@@ -13,24 +16,27 @@ public class Cashier implements Runnable {
 	}
 	
 	public void run(){
-		int i = 0;
-		System.out.println("Cashier alive");
-		Socket cashierSocket;
-		PrintStream cashierPrintStream = null;
 		try {
-			cashierSocket = new Socket("localhost",9999);
-			System.out.println("bump");
-			cashierPrintStream = new PrintStream(cashierSocket.getOutputStream());
-			System.out.println("streamattt!");
-		} catch (UnknownHostException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		    cashierSocket = new Socket("localhost", 9999);
+		    out = new PrintWriter(cashierSocket.getOutputStream(), true);
+		    in = new BufferedReader(new InputStreamReader(cashierSocket.getInputStream()));
+		} catch (UnknownHostException e) {
+		    System.err.println("Don't know about host: localhost."); //TODO make this error message nice
+		    System.exit(1);
+		} catch (IOException e) {
+		    System.err.println("Couldn't get I/O for the connection to: localhost."); //TODO dynamic error message
+		    System.exit(1);
 		}
+
+		BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
+		String fromServer;
+
+		int i = 0;
 		while(i < 30)
 		{
+			
+			
+			
 			Random r = new Random();
 			try {
 				Thread.sleep(r.nextInt(4999));
@@ -39,20 +45,21 @@ public class Cashier implements Runnable {
 				e.printStackTrace();
 			}
 			
-			/*try {
-			Socket cashierSocket = new Socket("localhost", 9999);
-			PrintStream cashierPrintStream = new PrintStream(cashierSocket.getOutputStream());
-			cashierPrintStream.print("connect");
-			} catch (Exception e) {
-				
-			}*/
-			if(cashierPrintStream!=null)cashierPrintStream.print("placeOrder");
-			System.out.println("yum!");
-			/*Order tempOrder = kitchen.addOrder(cashierName);
-			System.out.println("Cashier: " + cashierName + "  " + tempOrder.getOrderID() + "  Placed at: "
-			+ tempOrder.getTimePlaced());
-			i=i+1;*/
+				out.print("placeOrder");
+				System.out.println("yum!");
+				i+=1;
 		}
+		
+		try {
+		out.close();
+		in.close();
+		stdIn.close();
+		cashierSocket.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
-	
 }
+	

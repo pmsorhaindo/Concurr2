@@ -1,0 +1,40 @@
+
+int i = 0;
+System.out.println("Cashier alive");
+Socket cashierSocket;
+PrintStream cashierPrintStream = null;
+try {
+	cashierSocket = new Socket("localhost",9999);
+	System.out.println("bump");
+	cashierPrintStream = new PrintStream(cashierSocket.getOutputStream());
+	System.out.println("streamattt!");
+} catch (UnknownHostException e1) {
+	// TODO Auto-generated catch block
+	e1.printStackTrace();
+} catch (IOException e1) {
+	// TODO Auto-generated catch block
+	e1.printStackTrace();
+}
+while(i < 30)
+{
+	Random r = new Random();
+	try {
+		Thread.sleep(r.nextInt(4999));
+	} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+		cashierPrintStream.print("placeOrder");
+		System.out.println("yum!");
+	}
+	/*Order tempOrder = kitchen.addOrder(cashierName);
+	System.out.println("Cashier: " + cashierName + "  " + tempOrder.getOrderID() + "  Placed at: "
+	+ tempOrder.getTimePlaced());
+	i=i+1;*/
+}
+
+
+
+
+

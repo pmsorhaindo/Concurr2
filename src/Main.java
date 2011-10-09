@@ -12,7 +12,6 @@ public class Main {
 	
 		
 		server1.start();
-		System.out.println("wahh");
 		cashier1.start();
 		cook1.start();
 		
