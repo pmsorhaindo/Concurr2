@@ -3,8 +3,15 @@ import java.net.*;
 
 public class Server {
 
-    public static void main(String[] args) throws IOException {
+	private OrderList kitchen;
+	
+    public Server(OrderList newKitchen) {
+		kitchen = newKitchen;
+	}
+
+	public void start (String[] args) throws IOException {
         
+    	OrderList kitchen = new OrderList(); 
     	ServerSocket serverSocket = null;
         boolean listening = true;
  
@@ -16,7 +23,7 @@ public class Server {
         }
  
         while (listening)
-        new ServerThread(serverSocket.accept()).start();
+        new ServerThread(serverSocket.accept(),kitchen).start();
  
         serverSocket.close();
     }

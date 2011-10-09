@@ -4,10 +4,13 @@ import java.io.*;
 public class ServerThread extends Thread {
     
 	private Socket socket = null;
+	private OrderList kitchen = null;
     
-	public ServerThread(Socket socket) {
+	public ServerThread(Socket socket,OrderList newKitchen) {
 	super("ServerThread"); //Names the thread using the Thread class.
 	this.socket = socket;
+	this.kitchen = newKitchen;
+	
     }
 
     public void run() {
@@ -19,7 +22,7 @@ public class ServerThread extends Thread {
 				    socket.getInputStream()));
 
 	    String inputLine, outputLine;
-	    KitchenComm com = new KitchenComm();
+	    KitchenComm com = new KitchenComm(kitchen);
 	    outputLine = com.processInput(null);
 	    out.println(outputLine);
 
