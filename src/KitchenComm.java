@@ -9,6 +9,11 @@ public class KitchenComm {
 	}
 	
     public String processInput(String theInput) {
+    	
+    	if (theInput==null)
+    	{
+    		System.out.println("we have Lift off!");
+    	}
         String theOutput = null;
         String author = null;
         String action =null;
@@ -27,6 +32,7 @@ public class KitchenComm {
  
         if (action.equals("placeOrder")){
         	kitchen.addOrder(author);
+        	System.out.println("Made it!!");
         }
         
         else if (action.equals("cookOrder")){
