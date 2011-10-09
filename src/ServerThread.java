@@ -10,27 +10,25 @@ public class ServerThread extends Thread {
 	super("ServerThread"); //Names the thread using the Thread class.
 	this.socket = socket;
 	this.kitchen = newKitchen;
+
 	
     }
 
     public void run() {
-    System.out.println("Server Thread reporting sir!");
-    kitchen.addOrder("test");
-    System.out.println(kitchen.ordersList.size());
 	try {
+		
 	    PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 	    BufferedReader in = new BufferedReader(
 				    new InputStreamReader(
 				    socket.getInputStream()));
-
-	    String inputLine, outputLine;
+	    String outputLine;
+	    while (true) {
 	    KitchenComm com = new KitchenComm(kitchen);
 	    outputLine = com.processInput(in.readLine());
-	    System.out.println("sending to com: "+outputLine);
+	    System.out.println("sending to com: "+ outputLine);
 	    out.println(outputLine);
 
-	    while ((inputLine = in.readLine()) != null) {
-		outputLine = com.processInput(inputLine);
+		outputLine = com.processInput(in.readLine());
 		out.println(outputLine);
 		if (outputLine.equals("Bye"))
 		    break;

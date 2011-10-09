@@ -17,7 +17,7 @@ public class Cashier implements Runnable {
 	
 	public void run(){
 		try {
-		    cashierSocket = new Socket("localhost", 9999);
+		    cashierSocket = new Socket("192.168.0.2", 8080);
 		    out = new PrintWriter(cashierSocket.getOutputStream(), true);
 		    in = new BufferedReader(new InputStreamReader(cashierSocket.getInputStream()));
 		} catch (UnknownHostException e) {
@@ -27,9 +27,6 @@ public class Cashier implements Runnable {
 		    System.err.println("Couldn't get I/O for the connection to: localhost."); //TODO dynamic error message
 		    System.exit(1);
 		}
-
-		BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
-		String fromServer;
 
 		int i = 0;
 		while(i < 30)
@@ -45,15 +42,14 @@ public class Cashier implements Runnable {
 				e.printStackTrace();
 			}
 			
-				out.print("placeOrder");
-				System.out.println("yum!");
+				out.print("placeOrder \n");
+				//System.out.println("yum!");
 				i+=1;
 		}
 		
 		try {
 		out.close();
 		in.close();
-		stdIn.close();
 		cashierSocket.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
