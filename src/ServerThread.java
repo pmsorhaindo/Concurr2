@@ -3,42 +3,50 @@ import java.io.*;
 
 public class ServerThread extends Thread {
     
-	private Socket socket = null;
-	private OrderList kitchen = null;
-    
-	public ServerThread(Socket socket,OrderList newKitchen) {
-	super("ServerThread"); //Names the thread using the Thread class.
-	this.socket = socket;
-	this.kitchen = newKitchen;
-
+	private Socket socket;
+	private OrderList kitchen;
+	BufferedReader in;
+	PrintWriter out;
 	
+	public ServerThread(Socket socket,OrderList newKitchen) {
+		this.socket = socket;
+		this.kitchen = newKitchen;	
     }
 
     public void run() {
-	try {
-		
-	    PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-	    BufferedReader in = new BufferedReader(
-				    new InputStreamReader(
-				    socket.getInputStream()));
-	    String outputLine;
-	    while (true) {
+    	
 	    KitchenComm com = new KitchenComm(kitchen);
-	    outputLine = com.processInput(in.readLine());
-	    System.out.println("sending to com: "+ outputLine);
-	    out.println(outputLine);
-
-		outputLine = com.processInput(in.readLine());
-		out.println(outputLine);
-		if (outputLine.equals("Bye"))
-		    break;
-	    }
-	    out.close();
-	    in.close();
-	    socket.close();
-
-	} catch (IOException e) {
-	    e.printStackTrace();
-	}
-    }
+	    BufferedReader in=null;
+		PrintWriter out=null;
+		String outputLine = null;
+		
+		try{
+			String input;
+		    out = new PrintWriter(socket.getOutputStream(), true);
+		    in = new BufferedReader(
+					    new InputStreamReader(
+					    socket.getInputStream()));
+			while(true){
+				
+				while ((input = in.readLine()) != null){
+					System.out.println("Go!");
+				   	outputLine = com.processInput(in.readLine());
+					System.out.println("sending to com: "+ outputLine);
+					out.println(outputLine);
+					outputLine = com.processInput(in.readLine());
+					out.println(outputLine);
+					System.out.println("input: "+input);
+					System.out.println("input: "+ input);
+					if (outputLine.equals("Bye")){
+						out.close();
+					    in.close();
+					    socket.close();
+					    break;
+					}
+				}
+			}
+		} catch (IOException e) {
+		    	e.printStackTrace();
+		}
+	}   
 }

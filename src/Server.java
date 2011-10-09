@@ -2,13 +2,14 @@ import java.io.*;
 import java.net.*;
 
 public class Server implements Runnable {
-
+	OrderList kitchen;
+	
 	public Server(OrderList newKitchen) {
+		kitchen= newKitchen;
 	}
 
 	public void run(){
-        
-    	OrderList kitchen = new OrderList(); 
+         
     	ServerSocket serverSocket = null;
         boolean listening = true;
         
@@ -16,7 +17,7 @@ public class Server implements Runnable {
             serverSocket = new ServerSocket(8080);
             
         } catch (IOException e) {
-            System.err.println("Could not listen on port: 8080.");
+            System.err.println("IO fail");
             System.exit(-1);
         }
  

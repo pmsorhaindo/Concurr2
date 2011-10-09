@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.io.*;
-import java.net.*;
 
 /**
  * Class for managing orders. The class holds a protected array list of orders.

@@ -7,55 +7,65 @@ public class Cashier implements Runnable {
 	private OrderList kitchen;
 	private String cashierName;
 	private Socket cashierSocket = null;
-	private PrintWriter out = null;
+	private PrintStream out = null;
 	private BufferedReader in = null;
 	
 	public Cashier(String nameText, OrderList kitchenName){
-		cashierName = nameText;
-		kitchen = kitchenName;
+		setCashierName(nameText);
+		setKitchen(kitchenName);
 	}
 	
 	public void run(){
 		try {
-		    cashierSocket = new Socket("192.168.0.2", 8080);
-		    out = new PrintWriter(cashierSocket.getOutputStream(), true);
+		    cashierSocket = new Socket("127.0.0.1", 8080);
+		    out = new PrintStream(cashierSocket.getOutputStream());
 		    in = new BufferedReader(new InputStreamReader(cashierSocket.getInputStream()));
+			int i = 0;
+			while(i < 30)
+			{
+				Random r = new Random();
+				try {
+					Thread.sleep(r.nextInt(4999));
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}			
+					out.println("placeOrder \n");
+					System.out.println("yawn!");
+					i+=1;
+			}
 		} catch (UnknownHostException e) {
-		    System.err.println("Don't know about host: localhost."); //TODO make this error message nice
+		    System.err.println("Finding Host fail"); //TODO make this error message nice
 		    System.exit(1);
 		} catch (IOException e) {
-		    System.err.println("Couldn't get I/O for the connection to: localhost."); //TODO dynamic error message
+		    System.err.println("IO fail");
 		    System.exit(1);
 		}
-
-		int i = 0;
-		while(i < 30)
-		{
-			
-			
-			
-			Random r = new Random();
-			try {
-				Thread.sleep(r.nextInt(4999));
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-				out.print("placeOrder \n");
-				//System.out.println("yum!");
-				i+=1;
-		}
-		
-		try {
-		out.close();
-		in.close();
-		cashierSocket.close();
+		try{
+			System.out.println("Nooo");
+			out.close();
+			in.close();
+			cashierSocket.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
 
+	public String getCashierName() {
+		return cashierName;
+	}
+
+	public void setCashierName(String cashierName) {
+		this.cashierName = cashierName;
+	}
+
+	public OrderList getKitchen() {
+		return kitchen;
+	}
+
+	public void setKitchen(OrderList kitchen) {
+		this.kitchen = kitchen;
 	}
 }
 	
