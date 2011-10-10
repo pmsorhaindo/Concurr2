@@ -26,14 +26,18 @@ public class KitchenComm {
     		
     		parseAuthorName();
     		tempOrder = kitchen.addOrder(author);
+    		//System.out.println("yow! set order : "+author);
     		theOutput = tempOrder.deConstructOrder();
+    		System.out.println("post place order: "+theOutput);
     		break;
     		
     	case 2:
     		
     		parseAuthorName();
         	tempOrder = kitchen.removeOrder(author);
+        	//System.out.println("yow! try to cook : "+author);
     		theOutput = tempOrder.deConstructOrder();
+    		System.out.println("post attempt cook: "+theOutput);
     		break;
     		
     	case 3:

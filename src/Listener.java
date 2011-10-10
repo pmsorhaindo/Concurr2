@@ -7,6 +7,7 @@ public class Listener implements Runnable {
 	
 	public Listener(int newPort){
 		listenPort=newPort;
+		System.out.println("Cheese!");
 	}
 	
 	public void run() {

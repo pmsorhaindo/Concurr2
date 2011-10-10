@@ -27,8 +27,6 @@ public class Cashier implements Runnable {
 		{
 		System.err.println("failed to set addresses");
 		}
-		Thread incoming = new Thread(new Listener(listenPort), "CashierListener");
-		incoming.start();
 	}
 	
 	public void run(){
@@ -36,6 +34,9 @@ public class Cashier implements Runnable {
 		    cashierSocket = new Socket(serverAddress, 8080,cashierAddress,port);
 		    out = new PrintStream(cashierSocket.getOutputStream());
 		    in = new BufferedReader(new InputStreamReader(cashierSocket.getInputStream()));
+		    listenPort = cashierSocket.getLocalPort();
+		    Thread incoming = new Thread(new Listener(listenPort), "CashierListener");
+			incoming.start();
 			int i = 0;
 			while(i < 30)
 			{
