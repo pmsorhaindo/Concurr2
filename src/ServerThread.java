@@ -7,6 +7,7 @@ public class ServerThread extends Thread {
 	private OrderList kitchen;
 	BufferedReader in;
 	PrintStream out;
+	String input,output;
 	
 	public ServerThread(Socket socket,OrderList newKitchen) {
 		this.socket = socket;
@@ -20,7 +21,6 @@ public class ServerThread extends Thread {
 		PrintStream out=null;
 		
 		try{
-			String input,output;
 		    out = new PrintStream(socket.getOutputStream(), true);
 		    in = new BufferedReader(
 					    new InputStreamReader(
@@ -28,10 +28,9 @@ public class ServerThread extends Thread {
 			while(true){
 				
 				while ((input = in.readLine()) != null){
-					output = com.processInput(input);
-					//out.println(output);
-					
-					if (output=="Bye"){
+					System.out.println("pudding");
+					out.println(output);
+					if (output=="Close"){
 						out.close();
 					    in.close();
 					    socket.close();
