@@ -30,8 +30,7 @@ public class Cashier implements Runnable {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}			
-					out.println("placeOrder \n");
-					System.out.println("yawn!");
+					out.println("placeOrder "+ getCashierName() + "\n");
 					i+=1;
 			}
 		} catch (UnknownHostException e) {

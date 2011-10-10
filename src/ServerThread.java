@@ -6,7 +6,7 @@ public class ServerThread extends Thread {
 	private Socket socket;
 	private OrderList kitchen;
 	BufferedReader in;
-	PrintWriter out;
+	PrintStream out;
 	
 	public ServerThread(Socket socket,OrderList newKitchen) {
 		this.socket = socket;
@@ -17,27 +17,21 @@ public class ServerThread extends Thread {
     	
 	    KitchenComm com = new KitchenComm(kitchen);
 	    BufferedReader in=null;
-		PrintWriter out=null;
-		String outputLine = null;
+		PrintStream out=null;
 		
 		try{
-			String input;
-		    out = new PrintWriter(socket.getOutputStream(), true);
+			String input,output;
+		    out = new PrintStream(socket.getOutputStream(), true);
 		    in = new BufferedReader(
 					    new InputStreamReader(
 					    socket.getInputStream()));
 			while(true){
 				
 				while ((input = in.readLine()) != null){
-					System.out.println("Go!");
-				   	outputLine = com.processInput(in.readLine());
-					System.out.println("sending to com: "+ outputLine);
-					out.println(outputLine);
-					outputLine = com.processInput(in.readLine());
-					out.println(outputLine);
-					System.out.println("input: "+input);
-					System.out.println("input: "+ input);
-					if (outputLine.equals("Bye")){
+					output = com.processInput(input);
+					//out.println(output);
+					
+					if (output=="Bye"){
 						out.close();
 					    in.close();
 					    socket.close();

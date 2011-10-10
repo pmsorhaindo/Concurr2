@@ -4,8 +4,8 @@ public class Order {
 	
 	private static int nextOrderID = 0;
 	private int orderID;
-	private Calendar timePlaced;
-	private Calendar timeCooked;
+	private String timePlaced;
+	private String timeCooked;
 	private String cashierName;
 	private String cookName;
 	
@@ -13,12 +13,23 @@ public class Order {
 		Order.nextOrderID = Order.nextOrderID+1;
 		orderID = nextOrderID;
 		cashierName = name;
-		timePlaced = Calendar.getInstance();
+		Calendar getTime = Calendar.getInstance();
+		timePlaced = timeToString(getTime);
 		timeCooked = null;
+	}
+	
+	public Order(int i, String signature)
+	{
+		
 	}
 	
 	public int getOrderID(){
 		return orderID;
+	}
+	
+	public String getOrderIDString(){
+		String id = Integer.toString(orderID);
+		return id;
 	}
 	
 	public String getCashierName(){
@@ -38,19 +49,16 @@ public class Order {
 	}
 	
 	public String getTimePlaced(){
-		String time = doubleDigit(timePlaced.get(11))+":"+doubleDigit(timePlaced.get(12))+":"
-		+doubleDigit(timePlaced.get(13))+":"+tripleDigit(timePlaced.get(14));
-		return time;
+		return timePlaced;
 	}
 	
 	public String getTimeCooked(){
-		String time = doubleDigit(timeCooked.get(11))+":"+doubleDigit(timeCooked.get(12))+":"
-		+doubleDigit(timeCooked.get(13))+":"+tripleDigit(timeCooked.get(14));;
-		return time;
+		return timeCooked;
 	}
 	
 	public void setCookedTime(){
-		timeCooked=Calendar.getInstance();
+		Calendar stopClock = Calendar.getInstance();
+		timeCooked = timeToString(stopClock);
 	}
 	
 	public String doubleDigit(int singleDigit){
@@ -76,6 +84,23 @@ public class Order {
 			return zero;
 		}
 		return tripleTime;
+	}
+	
+	public String timeToString(Calendar tempTime){
+		String timeReturn = doubleDigit(tempTime.get(11))+":"+doubleDigit(tempTime.get(12))+":"
+				+doubleDigit(tempTime.get(13))+":"+tripleDigit(tempTime.get(14));
+		return timeReturn;
+	}
+	
+	public String meltDownOrder(){
+		String signature = getOrderIDString() + " " + getTimePlaced() + " " + getTimeCooked() + " "
+				+ getCashierName() + " " + getCookName();
+		return signature;
+	}
+	
+	public String reBuildOrder(String signature){
+		//TODO loop through and string splitting by spaces and build an arraylist of parts check arraylist size if correct assign to new order structure.
+		return null;
 	}
 
 }

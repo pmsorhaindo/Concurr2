@@ -11,26 +11,25 @@ public class KitchenComm {
         String theOutput = null;
         String author = null;
         String action =null;
-        
-        System.out.println("Stuff: "+theInput);
-        
+                
+        System.out.println("Comm Input: "+theInput);
+       
         for (int i = 0; i<theInput.length(); i++){
 	        if (theInput.charAt(i) == ' '){
 		        author = theInput.substring(i,theInput.length());
-		        action = theInput.substring(0,i);
+		        //author = "Test";
+	        	action = theInput.substring(0,i);
 	        }
         }
         if(action == null)
         {
         	author = "System";
-        	action = "Invalid Request";
-        	theOutput = "fail";
+        	action = "nothing given";
+        	theOutput = "doNothing";
         }
         
-        System.out.println("Action: " +action);
         if (action.equals("placeOrder")){
         	kitchen.addOrder(author);
-        	System.out.println("Made it!!");
         	theOutput = "win";
         }
         
@@ -38,11 +37,14 @@ public class KitchenComm {
         	kitchen.removeOrder(author);
         	theOutput = "win";
         }
-        System.out.println("recieved this action "+ action + " frome this author "+ author);
+        else
+        {
+        	theOutput = "doNothing";
+        }
+        //System.out.println("recieved this action "+ action + ", from this author "+ author+".");
         return theOutput;
     }
 }
-
 
 	
 

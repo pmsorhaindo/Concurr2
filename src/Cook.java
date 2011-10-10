@@ -14,9 +14,6 @@ public class Cook implements Runnable {
 	}
 	
 	public void run(){
-		
-		
-		
 		while (true){
 		this.cookOrder();
 		}
@@ -31,13 +28,6 @@ public class Cook implements Runnable {
 	}
 
 	public void cookOrder(){
-		/*try {
-		Socket cookSocket = new Socket("localhost", 9999);
-		PrintStream cookPrintStream = new PrintStream(cookSocket.getOutputStream());
-		cookPrintStream.print("connect");
-		} catch (Exception e) {
-			
-		}*/
 		Order toCook = kitchen.removeOrder(this.cookName);
 		Random r = new Random();
 		try{

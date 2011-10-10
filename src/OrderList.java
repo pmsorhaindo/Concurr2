@@ -5,7 +5,7 @@ import java.util.ArrayList;
  * @author 
  *
  */
-public class OrderList implements Runnable {
+public class OrderList{
 	
 		 protected ArrayList<Order> ordersList;
 		 protected ArrayList<Order> completedList;
@@ -26,7 +26,6 @@ public class OrderList implements Runnable {
 	  */
 	synchronized public Order addOrder(String cashierName)
 	{
-		System.out.println("Ow!");
 		Order newOrder = new Order(cashierName);
 		ordersList.add(newOrder);
 		notifyAll();
@@ -58,19 +57,4 @@ public class OrderList implements Runnable {
 		return orderComplete;
 	}
 
-	
-	public void run() {
-		//TODO stuff here
-		while(true)
-		{
-			//read line and parse
-		}
-		
-	}
-	
-	
-	public void parseServerCommand(){
-		
-		
-	}
 }
