@@ -92,7 +92,7 @@ public class Order {
 		return timeReturn;
 	}
 	
-	public String meltDownOrder(){
+	public String deConstructOrder(){
 		String signature = getOrderIDString() + " " + getTimePlaced() + " " + getTimeCooked() + " "
 				+ getCashierName() + " " + getCookName();
 		return signature;

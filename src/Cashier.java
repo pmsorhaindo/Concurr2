@@ -4,20 +4,36 @@ import java.io.*;
 
 public class Cashier implements Runnable {
 	
+	private static int nextPort = 9000;
 	private OrderList kitchen;
 	private String cashierName;
-	private Socket cashierSocket = null;
-	private PrintStream out = null;
-	private BufferedReader in = null;
+	private Socket cashierSocket;
+	private PrintStream out;
+	private BufferedReader in;
+	private InetAddress serverAddress;
+	private InetAddress cashierAddress;
+	private int port;
+	private int listenPort;
 	
 	public Cashier(String nameText, OrderList kitchenName){
 		setCashierName(nameText);
 		setKitchen(kitchenName);
+		port=Cashier.nextPort+1;
+		try{
+		serverAddress = InetAddress.getByName("127.0.0.1");
+		cashierAddress = InetAddress.getByName("127.0.0.1");
+		}
+		catch(UnknownHostException e)
+		{
+		System.err.println("failed to set addresses");
+		}
+		Thread incoming = new Thread(new Listener(listenPort), "CashierListener");
+		incoming.start();
 	}
 	
 	public void run(){
 		try {
-		    cashierSocket = new Socket("127.0.0.1", 8080);
+		    cashierSocket = new Socket(serverAddress, 8080,cashierAddress,port);
 		    out = new PrintStream(cashierSocket.getOutputStream());
 		    in = new BufferedReader(new InputStreamReader(cashierSocket.getInputStream()));
 			int i = 0;
@@ -30,18 +46,17 @@ public class Cashier implements Runnable {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}			
-					out.print("placeOrder "+ getCashierName() + "\n");
+					out.print("1*"+ getCashierName() + "\n");
 					i+=1;
 			}
 		} catch (UnknownHostException e) {
 		    System.err.println("Finding Host fail"); //TODO make this error message nice
 		    System.exit(1);
 		} catch (IOException e) {
-		    System.err.println("IO fail");
+		    System.err.println("O fail");
 		    System.exit(1);
 		}
 		try{
-			System.out.println("Nooo");
 			out.close();
 			in.close();
 			cashierSocket.close();

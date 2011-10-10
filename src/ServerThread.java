@@ -28,8 +28,9 @@ public class ServerThread extends Thread {
 			while(true){
 				
 				while ((input = in.readLine()) != null){
-					System.out.println("pudding");
-					out.println(output);
+					output = com.processInput(input);
+					out.print(output+"\n");
+					
 					if (output=="Close"){
 						out.close();
 					    in.close();

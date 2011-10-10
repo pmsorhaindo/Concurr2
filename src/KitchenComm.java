@@ -1,49 +1,61 @@
 
 public class KitchenComm {
 	private OrderList kitchen;
+	private String input = "";
+	private String author = "";
+	String theOutput = "";
 	
 	public KitchenComm(OrderList newKitchen) {
 		kitchen = newKitchen;
 	}
 	
     public String processInput(String theInput) {
-    	
-        String theOutput = null;
-        String author = null;
-        String action =null;
-                
-        System.out.println("Comm Input: "+theInput);
-       
-        for (int i = 0; i<theInput.length(); i++){
-	        if (theInput.charAt(i) == ' '){
-		        author = theInput.substring(i,theInput.length());
-		        //author = "Test";
-	        	action = theInput.substring(0,i);
-	        }
-        }
-        if(action == null)
-        {
-        	author = "System";
-        	action = "nothing given";
-        	theOutput = "doNothing";
-        }
+       	input = theInput;
+       	System.out.println(theInput);
+        int command = Integer.parseInt(theInput.charAt(0)+"");
+        talkToServer(command);
         
-        if (action.equals("placeOrder")){
-        	kitchen.addOrder(author);
-        	theOutput = "win";
-        }
-        
-        else if (action.equals("cookOrder")){
-        	kitchen.removeOrder(author);
-        	theOutput = "win";
-        }
-        else
-        {
-        	theOutput = "doNothing";
-        }
-        //System.out.println("recieved this action "+ action + ", from this author "+ author+".");
         return theOutput;
     }
+    
+    public void talkToServer(int command){
+    	Order tempOrder;
+    	switch(command)
+    	{
+    	case 1:
+    		
+    		parseAuthorName();
+    		tempOrder = kitchen.addOrder(author);
+    		theOutput = tempOrder.deConstructOrder();
+    		break;
+    		
+    	case 2:
+    		
+    		parseAuthorName();
+        	tempOrder = kitchen.removeOrder(author);
+    		theOutput = tempOrder.deConstructOrder();
+    		break;
+    		
+    	case 3:
+        	
+        	break;	
+    	
+    	case 4:
+        	
+        	break;
+
+    	}
+    }
+    
+    public void parseAuthorName(){
+    	 for (int i = 0; i<input.length(); i++){
+    		 if(input.charAt(i) == '*'){
+    			 author = input.substring(i,input.length());    
+    		 }
+    	 }
+    }
+    
+    
 }
 
 	

@@ -7,6 +7,9 @@ public class Cook implements Runnable {
 	//Private Class Variables
 	private String cookName; // Cook name used to identify individual cooks.
 	private OrderList kitchen; // The kitchen the cook works in
+	private Socket cookSocket;
+	private PrintStream out;
+	private BufferedReader in;
 	
 	Cook(String textCookName, OrderList kitchenObject){
 		cookName = textCookName;
@@ -15,7 +18,14 @@ public class Cook implements Runnable {
 	
 	public void run(){
 		while (true){
-		this.cookOrder();
+			try {
+				cookSocket = new Socket("127.0.0.1", 8080);
+			    out = new PrintStream(cookSocket.getOutputStream());
+			    in = new BufferedReader(new InputStreamReader(cookSocket.getInputStream()));
+				this.cookOrder();
+			} catch (Exception e) {
+				//TODO hmm
+			}
 		}
 	}
 	
@@ -28,17 +38,15 @@ public class Cook implements Runnable {
 	}
 
 	public void cookOrder(){
-		Order toCook = kitchen.removeOrder(this.cookName);
+		out.print("2*" + getCookName() + "\n");
+		
 		Random r = new Random();
 		try{
 			Thread.sleep(r.nextInt(6999)); // random int used for its value as milliseconds between 0 and 6999.
 		}
 		catch (Exception e){
 		}
-		toCook.setCookedTime();
-		System.out.println("Cook: " + toCook.getCookName() + " finished cooking Order " + toCook.getOrderID() 
-			+  " at: " + toCook.getTimeCooked() + ". It was placed at: " + toCook.getTimePlaced()
-			+ " by " + toCook.getCashierName());
+		out.print("3*" + getCookName()+ "\n");
 	}
 	
 
