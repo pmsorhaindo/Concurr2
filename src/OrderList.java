@@ -79,10 +79,7 @@ public class OrderList{
 			if(checkOrder.getOrderID()==orderID)
 			{
 				orderToMove = checkOrder;
-			}
-			else
-			{
-				System.err.println("Order requested to remove not found!");
+				System.out.println("OrderFOUND!");
 			}
 		}
 			

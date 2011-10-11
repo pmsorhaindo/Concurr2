@@ -44,7 +44,7 @@ public class KitchenComm {
     	case 3:
     		
     		parseAuthorName();
-    		tempOrder = kitchen.completeOrder(author, orderID);
+    		tempOrder = kitchen.completeOrder(author, 1);
     		theOutput = tempOrder.deConstructOrder();
     		        	
         	break;	
