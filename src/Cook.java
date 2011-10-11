@@ -10,6 +10,7 @@ public class Cook implements Runnable {
 	private Socket cookSocket;
 	private PrintStream out;
 	private BufferedReader in;
+	private int cookID;
 	
 	Cook(String textCookName, OrderList kitchenObject){
 		cookName = textCookName;
@@ -25,12 +26,12 @@ public class Cook implements Runnable {
 				this.cookOrder();
 				String input = "";
 				if ((input = in.readLine()) != null){
-					System.out.println("Cook got this back: "+input);
+					System.out.println("Cook: " + parseOrderCompleteReturn(input));
+					//System.out.println("Cook got this back: "+input);
 				}
 			} catch (Exception e) {
-				//TODO Handle exceptin
+				//TODO Handle exception
 			}
-
 		}
 	}
 	
@@ -54,5 +55,29 @@ public class Cook implements Runnable {
 		out.print("3*" + getCookName()+"*"+ "\n");
 	}
 	
-
+	
+	public String parseOrderCompleteReturn(String inputToParse){
+		String orderPlaced = "Order ";
+		orderPlaced = orderPlaced+ inputToParse.substring(0,getNextStarPos(inputToParse));//order ID
+		inputToParse = inputToParse.substring((getNextStarPos(inputToParse)+1),inputToParse.length());
+		orderPlaced = orderPlaced + " was placed at " + inputToParse.substring(0,getNextStarPos(inputToParse));// Time Placed
+		inputToParse = inputToParse.substring((getNextStarPos(inputToParse)+1),inputToParse.length()); 
+		String timeCooked =  inputToParse.substring(0,getNextStarPos(inputToParse));//Time Cooked
+		inputToParse = inputToParse.substring((getNextStarPos(inputToParse)+1),inputToParse.length());
+		orderPlaced = orderPlaced + " by Cashier "+ inputToParse.substring(0,getNextStarPos(inputToParse));//Cashier
+		inputToParse = inputToParse.substring((getNextStarPos(inputToParse)+1),inputToParse.length());
+		orderPlaced = orderPlaced + " it was completed by Cook " + inputToParse;//Cook
+		orderPlaced = orderPlaced + " at " + timeCooked;
+		return orderPlaced;
+   	 }
+	
+	public int getNextStarPos(String input){
+		for (int i = 0; i<input.length(); i++){
+   		 if(input.charAt(i) == '*'){
+   			 return i;
+   		 }
+   	 }
+		return 0;
+	}
+	
 }

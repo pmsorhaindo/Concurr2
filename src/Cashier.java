@@ -37,10 +37,10 @@ public class Cashier implements Runnable {
 		    //listenPort = cashierSocket.getLocalPort();
 		    //Thread incoming = new Thread(new Listener(listenPort), "CashierListener");
 			//incoming.start();
-			int i = 0;
 			
 			
-			while(i < 30)
+			
+			while(true)
 			{
 				Random r = new Random();
 				try {
@@ -50,7 +50,7 @@ public class Cashier implements Runnable {
 					e.printStackTrace();
 				}			
 					out.print("1*"+ getCashierName() + "\n");
-					i+=1;
+
 					String input;
 					if ((input = in.readLine()) != null){
 						System.out.println("Cashier: "+ parseOrderPlacedReturn(input));

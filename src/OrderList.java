@@ -10,6 +10,8 @@ public class OrderList{
 		 protected ArrayList<Order> ordersList;
 		 protected ArrayList<Order> pendingList;
 		 protected ArrayList<Order> completedList;
+		 protected ArrayList<Order> cooksList;
+		 protected ArrayList<Order> cashiersList;
 		 
 	 /**
 	  * Constructor with no arguments, create a new empty array list of orders.
@@ -70,11 +72,26 @@ public class OrderList{
 				//TODO
 			}
 		}
-		pendingList.add(ordersList.get(0));
-		ordersList.remove(0);
-		pendingList.get(pendingList.size()-1).setCookName(cookName);
-		Order orderPending = pendingList.get((pendingList.size()-1));
-		return orderPending;
+		
+		Order orderToMove = null;
+		for (Order checkOrder:pendingList)
+		{
+			if(checkOrder.getOrderID()==orderID)
+			{
+				orderToMove = checkOrder;
+			}
+			else
+			{
+				System.err.println("Order requested to remove not found!");
+			}
+		}
+			
+		completedList.add(orderToMove);
+		pendingList.remove(orderToMove);
+		System.out.print("Hi orderlist complete was called and the size of the completed list at the time was: " + completedList.size());
+		completedList.get(completedList.size()).setCookedTime();
+		Order orderComplete = completedList.get((completedList.size()-1));//good
+		return orderComplete;
 	}
 
 }

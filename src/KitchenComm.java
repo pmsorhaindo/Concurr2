@@ -29,7 +29,7 @@ public class KitchenComm {
     		tempOrder = kitchen.addOrder(author);
     		//System.out.println("yow! set order : "+author);
     		theOutput = tempOrder.deConstructOrder();
-    		System.out.println("post place order: "+theOutput);
+    		//System.out.println("post place order: "+theOutput);
     		break;
     		
     	case 2:
@@ -38,14 +38,15 @@ public class KitchenComm {
         	tempOrder = kitchen.removeOrder(author);
         	//System.out.println("yow! try to cook : "+author);
     		theOutput = tempOrder.deConstructOrder();
-    		System.out.println("post attempt cook: "+theOutput);
+    		//System.out.println("post attempt cook: "+theOutput);
     		break;
     		
     	case 3:
     		
     		parseAuthorName();
     		tempOrder = kitchen.completeOrder(author, orderID);
-        	
+    		theOutput = tempOrder.deConstructOrder();
+    		        	
         	break;	
     	
     	case 4:
