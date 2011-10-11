@@ -23,9 +23,14 @@ public class Cook implements Runnable {
 			    out = new PrintStream(cookSocket.getOutputStream());
 			    in = new BufferedReader(new InputStreamReader(cookSocket.getInputStream()));
 				this.cookOrder();
+				String input = "";
+				if ((input = in.readLine()) != null){
+					System.out.println("Cook got this back: "+input);
+				}
 			} catch (Exception e) {
-				//TODO hmm
+				//TODO Handle exceptin
 			}
+
 		}
 	}
 	
@@ -46,7 +51,7 @@ public class Cook implements Runnable {
 		}
 		catch (Exception e){
 		}
-		out.print("3*" + getCookName()+ "\n");
+		out.print("3*" + getCookName()+"*"+ "\n");
 	}
 	
 

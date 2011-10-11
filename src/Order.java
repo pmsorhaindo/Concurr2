@@ -93,8 +93,8 @@ public class Order {
 	}
 	
 	public String deConstructOrder(){
-		String signature = getOrderIDString() + " " + getTimePlaced() + " " + getTimeCooked() + " "
-				+ getCashierName() + " " + getCookName();
+		String signature = getOrderIDString() + "*" + getTimePlaced() + "*" + getTimeCooked() + "*"
+				+ getCashierName() + "*" + getCookName();
 		return signature;
 	}
 	

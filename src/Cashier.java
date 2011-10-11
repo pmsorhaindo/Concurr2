@@ -53,7 +53,7 @@ public class Cashier implements Runnable {
 					i+=1;
 					String input;
 					if ((input = in.readLine()) != null){
-						System.out.println("Cashier got this back: "+input);
+						System.out.println("Cashier: "+ parseOrderPlacedReturn(input));
 					}
 			}
 		} catch (UnknownHostException e) {
@@ -87,6 +87,30 @@ public class Cashier implements Runnable {
 
 	public void setKitchen(OrderList kitchen) {
 		this.kitchen = kitchen;
+	}
+	
+	public String parseOrderPlacedReturn(String inputToParse){
+		String orderPlaced = "Order ";
+		orderPlaced = orderPlaced+ inputToParse.substring(0,getNextStarPos(inputToParse));//order ID
+		inputToParse = inputToParse.substring((getNextStarPos(inputToParse)+1),inputToParse.length());
+		orderPlaced = orderPlaced + " was placed at " + inputToParse.substring(0,getNextStarPos(inputToParse));// Time Placed
+		inputToParse = inputToParse.substring((getNextStarPos(inputToParse)+1),inputToParse.length()); 
+		String timeCooked =  inputToParse.substring(0,getNextStarPos(inputToParse));//Time Cooked
+		inputToParse = inputToParse.substring((getNextStarPos(inputToParse)+1),inputToParse.length());
+		orderPlaced = orderPlaced + " by Cashier "+ inputToParse.substring(0,getNextStarPos(inputToParse));//Cashier
+		inputToParse = inputToParse.substring((getNextStarPos(inputToParse)+1),inputToParse.length());
+		orderPlaced = orderPlaced+ inputToParse.substring(0,getNextStarPos(inputToParse));//Cook
+		inputToParse = inputToParse.substring((getNextStarPos(inputToParse)+1),inputToParse.length());
+		return orderPlaced;
+   	 }
+	
+	public int getNextStarPos(String input){
+		for (int i = 0; i<input.length(); i++){
+   		 if(input.charAt(i) == '*'){
+   			 return i;
+   		 }
+   	 }
+		return 0;
 	}
 }
 	

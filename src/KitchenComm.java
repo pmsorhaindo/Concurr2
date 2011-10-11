@@ -4,6 +4,7 @@ public class KitchenComm {
 	private String input = "";
 	private String author = "";
 	String theOutput = "";
+	int orderID = 0;
 	
 	public KitchenComm(OrderList newKitchen) {
 		kitchen = newKitchen;
@@ -41,6 +42,9 @@ public class KitchenComm {
     		break;
     		
     	case 3:
+    		
+    		parseAuthorName();
+    		tempOrder = kitchen.completeOrder(author, orderID);
         	
         	break;	
     	
@@ -54,7 +58,7 @@ public class KitchenComm {
     public void parseAuthorName(){
     	 for (int i = 0; i<input.length(); i++){
     		 if(input.charAt(i) == '*'){
-    			 author = input.substring(i,input.length());    
+    			 author = input.substring(i+1,input.length());    
     		 }
     	 }
     }

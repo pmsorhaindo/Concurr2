@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class OrderList{
 	
 		 protected ArrayList<Order> ordersList;
+		 protected ArrayList<Order> pendingList;
 		 protected ArrayList<Order> completedList;
 		 
 	 /**
@@ -16,6 +17,7 @@ public class OrderList{
 	public OrderList(){
 		ordersList = new ArrayList<Order>();
 		completedList = new ArrayList<Order>();
+		pendingList = new ArrayList<Order>();
 	}
 	
 	 /**
@@ -50,11 +52,29 @@ public class OrderList{
 				//TODO
 			}
 		}
-		completedList.add(ordersList.get(0));
+		pendingList.add(ordersList.get(0));
 		ordersList.remove(0);
-		completedList.get(completedList.size()-1).setCookName(cookName);
-		Order orderComplete = completedList.get((completedList.size()-1));
-		return orderComplete;
+		pendingList.get(pendingList.size()-1).setCookName(cookName);
+		Order orderPending = pendingList.get((pendingList.size()-1));
+		return orderPending;
+	}
+	
+	synchronized public Order completeOrder(String cookName, int orderID)
+	{
+		while (ordersList.isEmpty()) {
+			try {
+				wait();
+			}
+			catch(Exception e)
+			{
+				//TODO
+			}
+		}
+		pendingList.add(ordersList.get(0));
+		ordersList.remove(0);
+		pendingList.get(pendingList.size()-1).setCookName(cookName);
+		Order orderPending = pendingList.get((pendingList.size()-1));
+		return orderPending;
 	}
 
 }
