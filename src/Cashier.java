@@ -34,10 +34,12 @@ public class Cashier implements Runnable {
 		    cashierSocket = new Socket(serverAddress, 8080,cashierAddress,port);
 		    out = new PrintStream(cashierSocket.getOutputStream());
 		    in = new BufferedReader(new InputStreamReader(cashierSocket.getInputStream()));
-		    listenPort = cashierSocket.getLocalPort();
-		    Thread incoming = new Thread(new Listener(listenPort), "CashierListener");
-			incoming.start();
+		    //listenPort = cashierSocket.getLocalPort();
+		    //Thread incoming = new Thread(new Listener(listenPort), "CashierListener");
+			//incoming.start();
 			int i = 0;
+			
+			
 			while(i < 30)
 			{
 				Random r = new Random();
@@ -49,6 +51,10 @@ public class Cashier implements Runnable {
 				}			
 					out.print("1*"+ getCashierName() + "\n");
 					i+=1;
+					String input;
+					if ((input = in.readLine()) != null){
+						System.out.println("Cashier got this back: "+input);
+					}
 			}
 		} catch (UnknownHostException e) {
 		    System.err.println("Finding Host fail"); //TODO make this error message nice

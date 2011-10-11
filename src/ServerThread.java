@@ -13,7 +13,6 @@ public class ServerThread extends Thread {
 		this.socket = socket;
 		this.kitchen = newKitchen;	
     }
-
     public void run() {
     	
 	    KitchenComm com = new KitchenComm(kitchen);
@@ -21,10 +20,12 @@ public class ServerThread extends Thread {
 		PrintStream out=null;
 		
 		try{
-		    out = new PrintStream(socket.getOutputStream(), true);
+		    //out = new PrintStream(socket.getOutputStream(), true);
+			//Thread response = new Thread(new Writer(,),"notListeningActuallyWriting");
 		    in = new BufferedReader(
 					    new InputStreamReader(
 					    socket.getInputStream()));
+		    out = new PrintStream(socket.getOutputStream());
 			while(true){
 				
 				while ((input = in.readLine()) != null){

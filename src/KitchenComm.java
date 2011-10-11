@@ -11,7 +11,7 @@ public class KitchenComm {
 	
     public String processInput(String theInput) {
        	input = theInput;
-       	System.out.println(theInput);
+       	//System.out.println(theInput);
         int command = Integer.parseInt(theInput.charAt(0)+"");
         talkToServer(command);
         
