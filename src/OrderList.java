@@ -79,14 +79,14 @@ public class OrderList{
 			if(checkOrder.getOrderID()==orderID)
 			{
 				orderToMove = checkOrder;
-				System.out.println("OrderFOUND!");
+				//System.out.println("OrderFOUND!");
 			}
 		}
 			
 		completedList.add(orderToMove);
 		pendingList.remove(orderToMove);
-		System.out.print("Hi orderlist complete was called and the size of the completed list at the time was: " + completedList.size());
-		completedList.get(completedList.size()).setCookedTime();
+		//System.out.println("Hi orderlist complete was called and the size of the completed list at the time was: " + completedList.size());
+		completedList.get(completedList.size()-1).setCookedTime();
 		Order orderComplete = completedList.get((completedList.size()-1));//good
 		return orderComplete;
 	}

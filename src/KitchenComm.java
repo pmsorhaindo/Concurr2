@@ -43,8 +43,8 @@ public class KitchenComm {
     		
     	case 3:
     		
-    		parseAuthorName();
-    		tempOrder = kitchen.completeOrder(author, 1);
+    		parseAuthorNameOrderID();
+    		tempOrder = kitchen.completeOrder(author,orderID);
     		theOutput = tempOrder.deConstructOrder();
     		        	
         	break;	
@@ -56,13 +56,30 @@ public class KitchenComm {
     	}
     }
     
-    public void parseAuthorName(){
+    private void parseAuthorNameOrderID() {
+    	input.substring(0,getNextStarPos(input));//order ID
+    	input = input.substring((getNextStarPos(input)+1),input.length());
+    	author =  input.substring(0,getNextStarPos(input));
+    	input = input.substring((getNextStarPos(input)+1),input.length());
+    	orderID = Integer.parseInt(input);
+	}
+
+	public void parseAuthorName(){
     	 for (int i = 0; i<input.length(); i++){
     		 if(input.charAt(i) == '*'){
     			 author = input.substring(i+1,input.length());    
     		 }
     	 }
     }
+	
+	public int getNextStarPos(String input){
+		for (int i = 0; i<input.length(); i++){
+   		 if(input.charAt(i) == '*'){
+   			 return i;
+   		 }
+   	 }
+		return 0;
+	}
     
     
 }

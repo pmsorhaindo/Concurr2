@@ -25,10 +25,7 @@ public class Cook implements Runnable {
 			    in = new BufferedReader(new InputStreamReader(cookSocket.getInputStream()));
 				this.cookOrder();
 				String input = "";
-				if ((input = in.readLine()) != null){
-					System.out.println("Cook: " + parseOrderCompleteReturn(input));
-					//System.out.println("Cook got this back: "+input);
-				}
+				
 			} catch (Exception e) {
 				//TODO Handle exception
 			}
@@ -44,17 +41,31 @@ public class Cook implements Runnable {
 	}
 
 	public void cookOrder(){
-		out.print("2*" + getCookName() + "\n");
-		
-		Random r = new Random();
 		try{
-			Thread.sleep(r.nextInt(6999)); // random int used for its value as milliseconds between 0 and 6999.
+			int recievedOrderID=0;
+			out.print("2*" + getCookName() + "\n");
+			String input;
+			if ((input = in.readLine()) != null){
+				recievedOrderID =  parseOrderRemoveReturn(input);
+				//System.out.println("Cook: " + parseOrderRemoveReturn(input));
+				Random r = new Random();
+				Thread.sleep(r.nextInt(6999)); // random int used for its value as milliseconds between 0 and 6999.
+			}
+			out.print("3*" + getCookName()+"*"+ recievedOrderID +"\n");
+			if ((input = in.readLine()) != null){
+			System.out.println("Cook: " + parseOrderCompleteReturn(input));
+			}
 		}
 		catch (Exception e){
 		}
-		out.print("3*" + getCookName()+"*"+ "\n");
 	}
 	
+	
+	public int parseOrderRemoveReturn(String inputToParse){
+		int orderPlaced;
+		orderPlaced = Integer.parseInt(inputToParse.substring(0,getNextStarPos(inputToParse)));//order ID
+		return orderPlaced;
+   	 }
 	
 	public String parseOrderCompleteReturn(String inputToParse){
 		String orderPlaced = "Order ";
