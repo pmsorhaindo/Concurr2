@@ -19,6 +19,8 @@ public class GUI implements Runnable{
 	
 	createLabels();
 	createTextBoxes();	
+	createButtons();
+	
 	panel.setVisible(true);
 	window.setVisible(true);
 	}
@@ -49,6 +51,9 @@ public class GUI implements Runnable{
 		enterPort.setBounds(10, 105, 75, 25);
 		panel.add(enterPort);
 		
+		JLabel enterServerPort = new JLabel("Server Port (Launch use): ");
+		enterServerPort.setBounds(10, 135, 75, 25);
+		panel.add(enterPort);
 	}
 	
 	private void createTextBoxes() {
@@ -64,6 +69,25 @@ public class GUI implements Runnable{
 		JTextField txtEnterPort = new JTextField();
 		txtEnterPort.setBounds(155,105,110,25);
 		panel.add(txtEnterPort);
+		
+		JTextField txtEnterServerPort = new JTextField();
+		txtEnterServerPort.setBounds(155,135,110,25);
+		panel.add(txtEnterServerPort);
 	}
+	
+	private void createButtons(){
+		
+		JButton btnInAsCashier = new JButton("Sign in as Cashier");
+		btnInAsCashier.setBounds(10,200,145,30);
+		panel.add(btnInAsCashier);
+		JButton btnInAsCook = new JButton("Sign in as Cook");
+		btnInAsCook.setBounds(180, 200, 30, 30);
+		panel.add(btnInAsCook);
+		JButton btnLaunchServer = new JButton("Launch Server");
+		btnLaunchServer.setBounds(250,200,30,30);
+		panel.add(btnLaunchServer);
+	}
+	
+	
 
 }
