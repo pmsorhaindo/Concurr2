@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 /**
  * Class for managing orders. The class holds a protected array list of orders.
- * @author 
+ * @author Mikey
  *
  */
 public class OrderList{
