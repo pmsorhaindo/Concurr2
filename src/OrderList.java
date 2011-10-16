@@ -10,8 +10,6 @@ public class OrderList{
 		 protected ArrayList<Order> ordersList;
 		 protected ArrayList<Order> pendingList;
 		 protected ArrayList<Order> completedList;
-		 protected ArrayList<Order> cooksList;
-		 protected ArrayList<Order> cashiersList;
 		 
 	 /**
 	  * Constructor with no arguments, create a new empty array list of orders.
@@ -90,5 +88,5 @@ public class OrderList{
 		Order orderComplete = completedList.get((completedList.size()-1));//good
 		return orderComplete;
 	}
-
+	
 }

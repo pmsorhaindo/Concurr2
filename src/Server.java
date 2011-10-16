@@ -3,9 +3,12 @@ import java.net.*;
 
 public class Server implements Runnable {
 	OrderList kitchen;
+	int listenPort;
 	
-	public Server(OrderList newKitchen) {
-		kitchen= newKitchen;
+	public Server(int newListenPort) {
+		OrderList kitchenYo = new OrderList();
+		kitchen= kitchenYo;
+		listenPort = newListenPort;
 	}
 
 	public void run(){
@@ -14,10 +17,10 @@ public class Server implements Runnable {
         boolean listening = true;
         
         try {
-            serverSocket = new ServerSocket(8080);
+            serverSocket = new ServerSocket(listenPort);
             
         } catch (IOException e) {
-            System.err.println("IO fail");
+            System.err.println("There was a problem trying to setup a server at this port.");
             System.exit(-1);
         }
  

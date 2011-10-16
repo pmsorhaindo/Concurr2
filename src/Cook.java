@@ -6,28 +6,36 @@ public class Cook implements Runnable {
 	
 	//Private Class Variables
 	private String cookName; // Cook name used to identify individual cooks.
-	private OrderList kitchen; // The kitchen the cook works in
 	private Socket cookSocket;
 	private PrintStream out;
 	private BufferedReader in;
 	private int cookID;
+	private int serverPort;
+	private String serverAddress;
+	private boolean onDuty;
 	
-	Cook(String textCookName, OrderList kitchenObject){
+	Cook(String textCookName, String newServerAddress, int newServerPort){
 		cookName = textCookName;
-		kitchen=kitchenObject;
+		serverPort = newServerPort;
+		serverAddress = newServerAddress;
+		onDuty = true;
 	}
 	
 	public void run(){
-		while (true){
+		while (onDuty){
 			try {
-				cookSocket = new Socket("127.0.0.1", 8080);
+				cookSocket = new Socket(serverAddress, serverPort);
 			    out = new PrintStream(cookSocket.getOutputStream());
 			    in = new BufferedReader(new InputStreamReader(cookSocket.getInputStream()));
 				this.cookOrder();
 				String input = "";
-				
-			} catch (Exception e) {
-				//TODO Handle exception
+				Thread.sleep(0);
+			} catch(InterruptedException e){
+				System.out.println("Cook "+cookName+" is signing off..");
+				onDuty=false;
+			}			
+			catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 	}
@@ -55,6 +63,10 @@ public class Cook implements Runnable {
 			if ((input = in.readLine()) != null){
 			System.out.println("Cook: " + parseOrderCompleteReturn(input));
 			}
+		}catch(InterruptedException e)
+		{
+			System.out.println("Cook "+cookName+" is signing off..");
+			onDuty=false;
 		}
 		catch (Exception e){
 		}

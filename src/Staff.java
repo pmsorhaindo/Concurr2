@@ -2,29 +2,43 @@ import java.util.*;
 
 
 public class Staff {
-	
-	private static int nextCookID = 0;
-	private static int nextCashierID = 0;
-	protected ArrayList<Order> cooksList;
-	protected ArrayList<Order> cashierList;
+
+	 protected HashMap<String,Thread> cashiersList;
+	 protected HashMap<String,Thread> cooksList;
 	 
 	public Staff(){
-		
-		cooksList = new ArrayList<Order>();
-		cashierList = new ArrayList<Order>();
+		cashiersList = new HashMap<String, Thread>();
+		cooksList = new HashMap<String, Thread>();
 		
 	}
 	
-	public int addNewCashier(){
-		Staff.nextCashierID = Staff.nextCashierID+1;
-		int newID = nextCashierID;
-		return newID;
+	synchronized public void logOff(String name,boolean cash){
+		
+		if(cash == true){
+					cashiersList.get(name).interrupt();
+				}
+				else{
+					cooksList.get(name).interrupt();
+				}
 	}
 	
-	public int addNewCook(){
-		Staff.nextCookID = Staff.nextCookID+1;
-		int newID = Staff.nextCashierID;
-		return newID;
+	synchronized public boolean logOn(String name, Thread t,boolean cash){
+		//System.out.println("currently the name var is: "+name); 
+		if(cash == true){
+			if(!cashiersList.containsKey(name)&&!cooksList.containsKey(name))
+			{
+			cashiersList.put(name, t);
+			return true;
+			}
+		}
+		else{
+			if(!cashiersList.containsKey(name)&&!cooksList.containsKey(name))
+			{
+			cooksList.put(name, t);
+			return true;
+			}
+		}
+		return false;		
 	}
 
 }

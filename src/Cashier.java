@@ -5,23 +5,24 @@ import java.io.*;
 public class Cashier implements Runnable {
 	
 	private static int nextPort = 9000;
-	private OrderList kitchen;
+	//private OrderList kitchen;
 	private String cashierName;
 	private Socket cashierSocket;
 	private PrintStream out;
 	private BufferedReader in;
 	private InetAddress serverAddress;
 	private InetAddress cashierAddress;
-	private int port;
+	private int serverPort;
 	private int listenPort;
+	private boolean onDuty;
 	
-	public Cashier(String nameText, OrderList kitchenName){
+	public Cashier(String nameText,String newServerAddress, String newServerPort){
 		setCashierName(nameText);
-		setKitchen(kitchenName);
-		port=Cashier.nextPort+1;
+		onDuty=true;
+		//setKitchen(kitchenName);
+		serverPort=Integer.parseInt(newServerPort);
 		try{
-		serverAddress = InetAddress.getByName("127.0.0.1");
-		cashierAddress = InetAddress.getByName("127.0.0.1");
+		serverAddress = InetAddress.getByName(newServerAddress);
 		}
 		catch(UnknownHostException e)
 		{
@@ -31,7 +32,7 @@ public class Cashier implements Runnable {
 	
 	public void run(){
 		try {
-		    cashierSocket = new Socket(serverAddress, 8080,cashierAddress,port);
+		    cashierSocket = new Socket(serverAddress, serverPort);
 		    out = new PrintStream(cashierSocket.getOutputStream());
 		    in = new BufferedReader(new InputStreamReader(cashierSocket.getInputStream()));
 		    //listenPort = cashierSocket.getLocalPort();
@@ -40,14 +41,14 @@ public class Cashier implements Runnable {
 			
 			
 			
-			while(true)
+			while(onDuty)
 			{
 				Random r = new Random();
 				try {
 					Thread.sleep(r.nextInt(4999));
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					System.out.println("cheeze!");
+					onDuty=false;
 				}			
 					out.print("1*"+ getCashierName() + "\n");
 
@@ -81,13 +82,13 @@ public class Cashier implements Runnable {
 		this.cashierName = cashierName;
 	}
 
-	public OrderList getKitchen() {
+/*	public OrderList getKitchen() {
 		return kitchen;
 	}
 
 	public void setKitchen(OrderList kitchen) {
 		this.kitchen = kitchen;
-	}
+	} */
 	
 	public String parseOrderPlacedReturn(String inputToParse){
 		String orderPlaced = "Order ";
