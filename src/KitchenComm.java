@@ -1,15 +1,31 @@
-
+/**
+ * Class for managing communication between employees and the kitchen TODO
+ * @author mikey
+ *
+ */
 public class KitchenComm {
 	private OrderList kitchen;
 	private String input = "";
 	private String author = "";
 	String theOutput = "";
+	/**
+	 * 
+	 */
 	int orderID = 0;
 	
+	/** TODO
+	 * Constructor ...
+	 * @param newKitchen
+	 */
 	public KitchenComm(OrderList newKitchen) {
 		kitchen = newKitchen;
 	}
 	
+	/**
+	 * 
+	 * @param theInput
+	 * @return
+	 */
     public String processInput(String theInput) {
        	input = theInput;
        	//System.out.println(theInput);
@@ -19,6 +35,10 @@ public class KitchenComm {
         return theOutput;
     }
     
+    /**
+     * 
+     * @param command
+     */
     public void talkToServer(int command){
     	Order tempOrder;
     	switch(command)
@@ -56,6 +76,11 @@ public class KitchenComm {
     	}
     }
     
+    /**
+     * Parses orderID and sets the kitchens current orderID to the
+     * ID found in the input string. This ID is then assigned to the
+     * variable orderID
+     */
     private void parseAuthorNameOrderID() {
     	input.substring(0,getNextStarPos(input));//order ID
     	input = input.substring((getNextStarPos(input)+1),input.length());

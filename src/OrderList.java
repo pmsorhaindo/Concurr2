@@ -3,7 +3,6 @@ import java.util.ArrayList;
 /**
  * Class for managing orders. The class holds a protected array list of orders.
  * @author Mikey
- *
  */
 public class OrderList{
 	
@@ -59,6 +58,12 @@ public class OrderList{
 		return orderPending;
 	}
 	
+	/**
+	 * TODO
+	 * @param cookName
+	 * @param orderID
+	 * @return
+	 */
 	synchronized public Order completeOrder(String cookName, int orderID)
 	{
 		while (ordersList.isEmpty()) {
