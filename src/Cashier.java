@@ -47,7 +47,7 @@ public class Cashier implements Runnable {
 				try {
 					Thread.sleep(r.nextInt(4999));
 				} catch (InterruptedException e) {
-					System.out.println("cheeze!");
+					System.out.println("Cashier " + cashierName + " is logging off...");
 					onDuty=false;
 				}			
 					out.print("1*"+ getCashierName() + "\n");

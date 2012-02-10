@@ -9,7 +9,7 @@ public class KitchenComm {
 	private String author = "";
 	String theOutput = "";
 	/**
-	 * 
+	 * TODO
 	 */
 	int orderID = 0;
 	
@@ -30,6 +30,7 @@ public class KitchenComm {
        	input = theInput;
        	//System.out.println(theInput);
         int command = Integer.parseInt(theInput.charAt(0)+"");
+        //if(command == 4) {System.out.println("yelle time!!");}
         talkToServer(command);
         
         return theOutput;
@@ -70,7 +71,12 @@ public class KitchenComm {
         	break;	
     	
     	case 4:
-        	
+    		
+    		parseOrderID();
+    		System.out.println(" OrderID returned = " + orderID);
+    		tempOrder = kitchen.interruptedOrder(orderID);
+    		theOutput = tempOrder.deConstructOrder();
+    		
         	break;
 
     	}
@@ -97,7 +103,13 @@ public class KitchenComm {
     	 }
     }
 	
-	public int getNextStarPos(String input){
+	public void parseOrderID() {
+		input.substring(0,getNextStarPos(input));
+		input = input.substring((getNextStarPos(input)+1),input.length());
+		orderID = Integer.parseInt(input);
+	}
+	
+	public int getNextStarPos(String input) {
 		for (int i = 0; i<input.length(); i++){
    		 if(input.charAt(i) == '*'){
    			 return i;

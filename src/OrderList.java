@@ -94,4 +94,29 @@ public class OrderList{
 		return orderComplete;
 	}
 	
+	/**
+	 * from pending list back to ordersList.. when a cook is interrupted.
+	 * @param orderID
+	 * @return
+	 */
+	synchronized public Order interruptedOrder(int orderID)
+	{
+		Order orderToMove = null;
+		for (Order checkOrder:pendingList)
+		{
+			if(checkOrder.getOrderID()==orderID)
+			{
+				orderToMove = checkOrder;
+				//System.out.println("OrderFOUND!");
+			}
+		}
+			
+		ordersList.add(0, orderToMove); // re-inserts it at the front of the queue using index 0. (prioritize interrupted orders)
+		pendingList.remove(orderToMove);
+		Order interruptedOrder = ordersList.get(0);
+		return interruptedOrder;
+	}
+	
+	
+	
 }

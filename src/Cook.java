@@ -13,12 +13,14 @@ public class Cook implements Runnable {
 	private int serverPort;
 	private String serverAddress;
 	private boolean onDuty;
+	int recievedOrderID;
 	
 	Cook(String textCookName, String newServerAddress, int newServerPort){
 		cookName = textCookName;
 		serverPort = newServerPort;
 		serverAddress = newServerAddress;
 		onDuty = true;
+		recievedOrderID = -1; // no order
 	}
 	
 	public void run(){
@@ -31,7 +33,7 @@ public class Cook implements Runnable {
 				String input = "";
 				Thread.sleep(0);
 			} catch(InterruptedException e){
-				System.out.println("Cook "+cookName+" is signing off..");
+				System.out.println("Cook "+cookName+" is signing off.. (the cook wasn't holding any orders at the time)");
 				onDuty=false;
 			}			
 			catch (Exception e) {
@@ -50,7 +52,7 @@ public class Cook implements Runnable {
 
 	public void cookOrder(){
 		try{
-			int recievedOrderID=0;
+			recievedOrderID=-1;
 			out.print("2*" + getCookName() + "\n");
 			String input;
 			if ((input = in.readLine()) != null){
@@ -65,6 +67,10 @@ public class Cook implements Runnable {
 			}
 		}catch(InterruptedException e)
 		{
+			if (recievedOrderID>0){
+			out.print("4*" + recievedOrderID + "\n");
+			System.out.println("Cook "+cookName+" is returning " + +recievedOrderID + " back to the ordersList");
+			}
 			System.out.println("Cook "+cookName+" is signing off..");
 			onDuty=false;
 		}
