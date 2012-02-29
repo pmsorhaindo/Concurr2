@@ -4,16 +4,13 @@ import java.io.*;
 
 public class Cashier implements Runnable {
 	
-	private static int nextPort = 9000;
 	//private OrderList kitchen;
 	private String cashierName;
 	private Socket cashierSocket;
 	private PrintStream out;
 	private BufferedReader in;
 	private InetAddress serverAddress;
-	private InetAddress cashierAddress;
 	private int serverPort;
-	private int listenPort;
 	private boolean onDuty;
 	
 	public Cashier(String nameText,String newServerAddress, String newServerPort){
@@ -35,11 +32,6 @@ public class Cashier implements Runnable {
 		    cashierSocket = new Socket(serverAddress, serverPort);
 		    out = new PrintStream(cashierSocket.getOutputStream());
 		    in = new BufferedReader(new InputStreamReader(cashierSocket.getInputStream()));
-		    //listenPort = cashierSocket.getLocalPort();
-		    //Thread incoming = new Thread(new Listener(listenPort), "CashierListener");
-			//incoming.start();
-			
-			
 			
 			while(onDuty)
 			{
@@ -81,14 +73,6 @@ public class Cashier implements Runnable {
 	public void setCashierName(String cashierName) {
 		this.cashierName = cashierName;
 	}
-
-/*	public OrderList getKitchen() {
-		return kitchen;
-	}
-
-	public void setKitchen(OrderList kitchen) {
-		this.kitchen = kitchen;
-	} */
 	
 	public String parseOrderPlacedReturn(String inputToParse){
 		String orderPlaced = "Order ";

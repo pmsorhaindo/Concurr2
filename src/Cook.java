@@ -2,6 +2,13 @@ import java.util.*;
 import java.io.*;
 import java.net.*;
 
+/**
+ * The Cook class details the operations of a Cook, and implements Runnable and is therefore
+ * designed to be run as a separate thread. The Cook requires connection to a server in order
+ * operate correctly.
+ * @author mikey
+ *
+ */
 public class Cook implements Runnable {
 	
 	//Private Class Variables

@@ -1,6 +1,5 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
 
 import javax.swing.*;
 
@@ -156,7 +155,7 @@ public class GUI implements Runnable, ActionListener{
 		{
 			if (serverRunning!=true)
 			{
-			System.out.println("go serv");
+			System.out.println("go server");
 			int listenPort= Integer.parseInt(txtEnterServerPort.getText());
 			server = new Thread(new Server(listenPort), "server");
 			server.start();

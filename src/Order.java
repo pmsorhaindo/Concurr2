@@ -97,10 +97,5 @@ public class Order {
 				+ getCashierName() + "*" + getCookName();
 		return signature;
 	}
-	
-	public String reBuildOrder(String signature){
-		//TODO loop through and string splitting by spaces and build an arraylist of parts check arraylist size if correct assign to new order structure.
-		return null;
-	}
 
 }
